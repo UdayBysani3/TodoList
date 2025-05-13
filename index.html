@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- bootstrap & Font Awesome -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+    <!-- your custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- jquery / popper / bootstrap JS -->
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/@popperjs/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init("YOUR_USER_ID"); // ← your EmailJS user ID
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="todos-bg-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+
+            <h1 class="todos-heading">Todos</h1>
+
+            <!-- ◉ User email (persisted in localStorage) -->
+            <label for="userEmail" class="time-label">Your email for reminders:</label>
+            <input
+              type="email"
+              id="userEmail"
+              class="time-input"
+              placeholder="you@example.com"
+            />
+
+            <h1 class="create-task-heading">
+              Create <span class="create-task-heading-subpart">Task</span>
+            </h1>
+
+            <!-- Task description -->
+            <input
+              type="text"
+              id="todoUserInput"
+              class="todo-user-input"
+              placeholder="What needs to be done?"
+            />
+
+            <!-- Start time -->
+            <label for="todoStartTime" class="time-label">Start Time:</label>
+            <input type="datetime-local" id="todoStartTime" class="time-input" />
+
+            <!-- End time -->
+            <label for="todoEndTime" class="time-label">End Time:</label>
+            <input type="datetime-local" id="todoEndTime" class="time-input" />
+
+            <button class="button" id="addTodoButton">Add</button>
+
+            <h1 class="todo-items-heading">
+              My <span class="todo-items-heading-subpart">Tasks</span>
+            </h1>
+
+            <ul class="todo-items-container" id="todoItemsContainer"></ul>
+            <button class="button" id="saveTodoButton">Save</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- your script -->
+    <script src="script.js"></script>
+  </body>
+</html>
