@@ -1,3 +1,4 @@
+
 // ── Elements ──
 const userEmailInput     = document.getElementById("userEmail");
 const todoItemsContainer = document.getElementById("todoItemsContainer");
@@ -28,7 +29,7 @@ function scheduleReminder(todo) {
   if (todo._timerId) clearTimeout(todo._timerId);
 
   const endMs   = new Date(todo.endTime).getTime();
-  const sendAt  = endMs - 60 * 60 * 1000;
+  const sendAt  = endMs - 60 * 60 * 1000; // 1 hour before end
   const now     = Date.now();
   const delay   = sendAt - now;
 
@@ -36,19 +37,22 @@ function scheduleReminder(todo) {
     todo._timerId = setTimeout(() => {
       if (!todo._deleted) {
         const toEmail = userEmailInput.value.trim();
-        if (!toEmail) return console.warn("No email set; skipping reminder.");
+        if (!toEmail) return;
 
         emailjs.send(
-          "YOUR_SERVICE_ID",    // ← your EmailJS service ID
-          "YOUR_TEMPLATE_ID",   // ← your EmailJS template ID
+          "service_k1lce5j", // Your EmailJS service ID
+          "template_sm3jcul", // Your EmailJS template ID
           {
-            to_email:   toEmail,
-            task_name:  todo.text,
-            task_end:   todo.endTime
+            to_email: toEmail,
+            task_name: todo.text,
+            task_end: todo.endTime
           }
         ).then(
-          () => console.log("Reminder sent to", toEmail, "for", todo.text),
-          err => console.error("EmailJS error", err)
+          () => alert("Reminder sent for " + todo.text),
+          err => {
+            console.error("EmailJS error:", err);
+            alert("Failed to send reminder for " + todo.text + ". Please try again.");
+          }
         );
       }
     }, delay);
@@ -128,6 +132,9 @@ function onAddTodo() {
   }
   if (new Date(endVal) <= new Date(startVal)) {
     return alert("End time must be after start time.");
+  }
+  if (new Date(endVal) <= new Date(Date.now() + 60 * 60 * 1000)) {
+    return alert("End time must be at least one hour from now.");
   }
 
   todosCount++;
